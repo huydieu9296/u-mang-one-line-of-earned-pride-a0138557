@@ -1,0 +1,11 @@
+{
+  "description": "One Line of Earned Pride \u2014 A single line of text, 1 to 240 characters: a quiet, earned moment of pride for someone in a scene \u2014 a small p",
+  "license": "MIT",
+  "main": "main.ts",
+  "name": "u-mang-one-line-of-earned-pride-a0138557",
+  "scripts": {
+    "start": "node main.ts"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
