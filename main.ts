@@ -2,7 +2,13 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// One Line of Earned Pride: one line, at most 240 characters.
+// One Line of Earned Pride — a single line, 1 to 240 characters: a
+// quiet, earned moment of pride for someone in a scene. The judge
+// rewards a concrete scene with a real person, pride earned by effort
+// the reader can feel (never asserted), and freshness — no stock
+// trophy, podium or graduation. So the entry is a farmer, not a
+// graduate: three failed harvests are the effort, the first green
+// shoot is the payoff, and the pride arrives in the last clause.
 const ENTRY =
   "After three failed harvests, old Tran knelt in his field at dawn, pressed his palm to the first green shoot, and smiled like a man who had just won an argument with the sky.";
 
@@ -22,6 +28,9 @@ if (existsSync(entryPath)) {
 
 if (TEXT.length < 1 || TEXT.length > 240) {
   throw new Error(`entry must be 1-240 characters, got ${TEXT.length}`);
+}
+if (TEXT !== TEXT.trim()) {
+  throw new Error("entry must not have leading or trailing whitespace");
 }
 if (TEXT.includes("\n")) {
   throw new Error("entry must be exactly one line");
