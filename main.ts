@@ -12,29 +12,47 @@ import { fileURLToPath } from "node:url";
 const ENTRY =
   "After three failed harvests, old Tran knelt in his field at dawn, pressed his palm to the first green shoot, and smiled like a man who had just won an argument with the sky.";
 
+const MIN_LEN = 1;
+const MAX_LEN = 240;
+
 const HERE = dirname(fileURLToPath(import.meta.url));
 
 // The entry text is also kept in entry.txt next to this script. If it is
 // present it must agree with the embedded entry; if it is absent (for
 // example a harness that copies only main.ts) the embedded text is used.
-let TEXT = ENTRY;
-const entryPath = join(HERE, "entry.txt");
-if (existsSync(entryPath)) {
+function loadEntry(): string {
+  const entryPath = join(HERE, "entry.txt");
+  if (!existsSync(entryPath)) {
+    return ENTRY;
+  }
   const fromFile = readFileSync(entryPath, "utf8").trim();
   if (fromFile.length > 0 && fromFile !== ENTRY) {
     throw new Error("entry.txt does not match the entry embedded in main.ts");
   }
+  return ENTRY;
 }
 
-if (TEXT.length < 1 || TEXT.length > 240) {
-  throw new Error(`entry must be 1-240 characters, got ${TEXT.length}`);
+// One line, in range, no stray whitespace: the bounty counts characters,
+// so a trailing newline or a doubled space would change the entry.
+function validateEntry(text: string): void {
+  if (text.length < MIN_LEN || text.length > MAX_LEN) {
+    throw new Error(
+      `entry must be ${MIN_LEN}-${MAX_LEN} characters, got ${text.length}`,
+    );
+  }
+  if (text !== text.trim()) {
+    throw new Error("entry must not have leading or trailing whitespace");
+  }
+  if (text.includes("\n")) {
+    throw new Error("entry must be exactly one line");
+  }
+  if (!/[.!?]$/.test(text)) {
+    throw new Error("entry must end with terminal punctuation");
+  }
 }
-if (TEXT !== TEXT.trim()) {
-  throw new Error("entry must not have leading or trailing whitespace");
-}
-if (TEXT.includes("\n")) {
-  throw new Error("entry must be exactly one line");
-}
+
+const TEXT = loadEntry();
+validateEntry(TEXT);
 
 const outDir = process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 mkdirSync(outDir, { recursive: true });

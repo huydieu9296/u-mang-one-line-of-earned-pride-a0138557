@@ -12,9 +12,22 @@ A single line of text, 1 to 240 characters: a quiet, earned moment of pride for 
 
 173 characters, one line. A concrete scene with a real person: three failed harvests are the effort the reader can feel, the green shoot is the payoff, and the pride arrives in the last clause without ever being named. No trophy, podium or graduation — the fresh image is a farmer winning an argument with the sky.
 
+## Why this scene
+
+The pride is earned, not asserted. Three failed harvests give the reader the
+cost up front; kneeling at dawn and pressing a palm to the shoot give the
+effort a body; the smile in the last clause is the payoff. Nothing in the
+line says "proud" — the reader feels it instead, which is exactly what the
+bounty asks for. The closing image does double duty: "an argument with the
+sky" turns three seasons of bad weather into a rival the farmer finally
+beats, so the pride lands as a win rather than a sentiment.
+
 ## Run
 
 ```sh
 node main.ts
 # writes the entry to $MAKEFUN_OUTPUT_DIR/entry.txt (default /output/entry.txt)
 ```
+
+`main.ts` embeds the entry, cross-checks it against `entry.txt`, validates
+the 1–240 character limit and the single-line rule, then writes it out.
